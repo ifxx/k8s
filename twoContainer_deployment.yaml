@@ -1,0 +1,40 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: twocontainer
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: twocontainer
+    spec:
+      imagePullSecrets:
+      - name: registry-secret
+      containers:
+      - name: front-end
+        image: shpm1.azurecr.cn/scott/nginx
+        ports:
+        - containerPort: 80
+      - name: flaskapp-demo
+        image: shpm1.azurecr.cn/scott/flaskapp
+        ports:
+        - containerPort: 5000 
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: twocontainer
+spec:
+  type: LoadBalancer
+  selector:
+    app: twocontainer
+  
+  ports:
+  - name: nginx
+    port: 80
+    targetPort: 80
+  - name: flask 
+    port: 50
+    targetPort: 5000

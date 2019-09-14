@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+spec:
+  rules:
+  - host: 50.baidu.com
+    http:
+      paths:
+      - backend:
+          serviceName: twocontainer
+          servicePort: 50
+  
+  - host: 80.baidu.com
+    http:
+      paths:
+      - backend:
+          serviceName: twocontainer
+          servicePort: 80

@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: 00.baidu.com
+    http:
+      paths:
+      - path: /five
+        backend:
+          serviceName: twocontainer
+          servicePort: 50
+      - path: /
+        backend:
+          serviceName: myapp-svc
+          servicePort: 80
